@@ -36,10 +36,12 @@ public class MainActivity extends Activity {
 			}
 
 			if(socket == null) return;
-
+			
+			final byte[] buf = new byte[1024];
+			final DatagramPacket reply = new DatagramPacket(buf, buf.length);
+			
 			while(!Thread.currentThread().isInterrupted()) {
-				final byte[] buf = new byte[1024];
-				final DatagramPacket reply = new DatagramPacket(buf, buf.length);
+				
 				try {
 					reply.setData(buf); //needed on some Android OSs to avoid message being cut off at previous packet's size
 					socket.receive(reply);
